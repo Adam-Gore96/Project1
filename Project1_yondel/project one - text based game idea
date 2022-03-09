@@ -1,0 +1,92 @@
+project one - text based game idea
+
+Yondel? 
+
+classic rpg
+
+possible exp and levels
+
+entities class
+1. name
+2. level
+3. class
+4. health
+5. inventory
+6. spells/abilties
+
+
+	A.Entities with Jobs
+		1.character
+			1.exp
+			2.mana
+		2.npc
+ 			a.hostile
+ 	i.bosses
+ b.neutral
+ 	i.bosses
+ 		A.Gods
+ 	i.wildlife
+
+ c.friendly
+ 	i. merchants
+ 	ii.quest givers/helpers
+
+
+
+4 classes
+
+1. Warrior
+	1. Rend
+	2. Charge
+	3. Bolster
+
+Base health: 110
+Base Armor: 100
+Crit : 0 %
+
+2. Mage
+	1. Fire ball
+	2. Icy touch
+	3. Dispersion
+
+Base health: 100
+Base Armor: 75
+Crit : 40%
+
+
+3. Priest
+	1. Heal
+	2. Smtie
+	3. Absorb
+
+Base health: 100
+Base Armor: 80
+Crit : 10%
+
+
+4. Rogue 
+	1. Stab
+	2. Posion Throw
+	3. Evasion
+
+Base health: 100
+Base Armor: 60
+Crit : 75%
+
+
+
+
+
+Player is the main character in the game
+starts by meeting a close friend who then goes missing
+
+
+after months you get the message from her phone that leads to an address. you can either 
+
+		Branch 1
+
+1. Ignore the mesasage
+	a. Ends the game
+2. Take the message to the police
+	b. 
+3. go there your self00
