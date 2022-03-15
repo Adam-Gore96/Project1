@@ -1,0 +1,12 @@
+{
+  "enemy": {
+    "Demon": [
+      {
+        "name":"Demon_Solider",
+        "level":"12",
+        "Type":"Large"
+      }
+ ] 
+      }
+    
+  }
