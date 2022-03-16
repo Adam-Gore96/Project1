@@ -1,20 +1,25 @@
 package Yondel
 import Yondel.Characters
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar
 //import Yondel.JDBC1
 import java.sql.DriverManager
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import scala.util.parsing.json
+import scala.util.Random
 
-class Convo_Input_Output {
+
+class Convo_Input_Output() {
+
+
 
 
   var input1 = new String
   var output1 = new String
   var c = new Characters
-  var saveState: Int = 0
-
+  var saveState:Int=0
+  var charid: Int = 0
 
   def sqlPrintTable(s: String): Unit = {
     val driver = "com.mysql.cj.jdbc.Driver"
@@ -34,7 +39,7 @@ class Convo_Input_Output {
         print(resultSet.getString(i) + " ")
       }
       // println(resultSet.getString(1)+", " +resultSet.getString(2) +", " +resultSet.getString(3))
-      count = count + 1
+      //count = count + 1
       println(" ")
     }
     connection.close()
@@ -53,14 +58,14 @@ class Convo_Input_Output {
     val resultSetMetaData = charidcrt.getMetaData
     var colcount: Int = resultSetMetaData.getColumnCount
     var rowCount: Int = 0
-    var charid: Int = 0
+
 
     val statement3 = connection.createStatement()
     val invqcount = statement3.executeQuery("SELECT Count(*) FROM INVENTORY;")
     //var invCount : Int = 0
     var invrowcount: Int = 0
 
-    println("This is the jobID " + job)
+    //println("This is the jobID " + job)
 
     //var charname = name
 
@@ -77,7 +82,7 @@ class Convo_Input_Output {
 
     while (charidcrt.next()) {
 
-      println("Testing 0: " + charidcrt.getString(1))
+      //println("Testing 0: " + charidcrt.getString(1))
 
       rowCount = charidcrt.getString(1).toInt
 
@@ -88,7 +93,7 @@ class Convo_Input_Output {
 
     while (invqcount.next()) {
 
-      println("Testing inv row count: " + invqcount.getString(1))
+      //println("Testing inv row count: " + invqcount.getString(1))
 
       invrowcount = invqcount.getString(1).toInt + 1
 
@@ -101,13 +106,13 @@ class Convo_Input_Output {
 
 
     sqlInsertInvString = "INSERT INTO INVENTORY VALUES(" + invrowcount + ", null, null, null, null, null, null, null)"
-    println("INSERT INTO INVENTORY VALUES(" + invrowcount + ", null, null, null, null, null, null, null)")
+   // println("INSERT INTO INVENTORY VALUES(" + invrowcount + ", null, null, null, null, null, null, null)")
     InsertInventoryStatement.executeUpdate(sqlInsertInvString)
 
     var sqlInsertCharString = new String
 
     sqlInsertCharString = "INSERT INTO CHARACTERS VALUES(" + charid + ", '" + name + "'," + level + ", " + job + ", " + "100, " + invrowcount + "0, 'Alive'); "
-    println("INSERT INTO CHARACTERS VALUES(" + charid + ", '" + name + "', " + level + ", " + job + ", " + "100, " + invrowcount + " ,0, 'Alive') ")
+    //println("INSERT INTO CHARACTERS VALUES(" + charid + ", '" + name + "', " + level + ", " + job + ", " + "100, " + invrowcount + " ,0, 'Alive') ")
     InsertCharactersStatement.executeUpdate("INSERT INTO CHARACTERS VALUES(" + charid + ", '" + name + "', " + level + ", " + job + ", " + "100, " + invrowcount + " ,0, 'Alive') ")
 
 
@@ -116,8 +121,8 @@ class Convo_Input_Output {
 
 
     //println("Testing for num rows: " + charidcrt)
-    println("Row Count:" + rowCount)
-    println("This is the inventory row count: " + invrowcount)
+   // println("Row Count:" + rowCount)
+    //println("This is the inventory row count: " + invrowcount)
     connection.close()
   }
 
@@ -204,6 +209,7 @@ class Convo_Input_Output {
       }
 
       input1 = scala.io.StdIn.readLine("How do you proceed? \n 1 ) Walk fowards \n 2 ) Walk Backwards \n 3 ) Walk to the sides \n 4 ) Sit down \n ")
+      println("This is getting you no where.")
       saveState = 1
     }
   }
@@ -220,18 +226,18 @@ class Convo_Input_Output {
 
   def ConvoPart2(): Unit = {
     input2 = scala.io.StdIn.readLine("Exasperated you yell out ")
-    println(input2 + "!")
-    output2 = "Would you be so kind as to stop yelling? \n A voice sounds behind you," +
+    println("'"+input2 + "!' you yell out.")
+    output2 = "'Would' you be so kind as to stop yelling'? \n A voice sounds behind you," +
       "and you spin to confront the newcomer. \nNo more than 5 paces from you sit a pale black-haired " +
       "woman behind a large wooden desk, and behind her stands a door with a small brass handle. \n You begin to think, " +
       "had that been there the entire time? No, it couldn’t be; there’s no way you’d have missed it. \n "
     println(output2)
-    output3 = "Name. She says, her face burried deep in a thick ledger."
+    output3 = "'Name.' She says, her face burried deep in a thick ledger."
     println(output3)
     nameInput = scala.io.StdIn.readLine("Enter your name: ")
 
-    output4 = nameInput + " huh? Let me see.\n " + "As she flips through the ledger a frown creeps up on her face. \n" + nameInput +
-      ", and that's your real name? "
+    output4 = nameInput + " 'huh? Let me see.'\n " + "As she flips through the ledger a frown creeps up on her face. \n" + nameInput +
+      ", 'and that's your real name?' "
     println(output4)
 
     var input3count: Int = 0
@@ -241,20 +247,20 @@ class Convo_Input_Output {
     while (input3count < 1) {
       if (input3 == "1") {
         output5 = "She frowns again, flips, now more frantically than before, through the pages." +
-          "\n she stands so suddenly that she'd nearly knocked over the desk. One moment, she says and quickly" +
+          "\n she stands so suddenly that she'd nearly knocked over the desk. 'One moment,' she says and quickly" +
           "\n disapeared behind the brass-handled door."
         input3count = input3count + 1
         saveState = 2
       }
       else if (input3 == "2") {
-        output6 = "It would really help if you gave me the your real name. \n "
+        output6 = "'It would really help if you gave me the your real name.' \n "
         println(output5)
         nameInput2 = scala.io.StdIn.readLine("Enter your name... again: \n")
 
         if (nameInput2 == nameInput) {
           //println(nameInput2)
           //println(nameInput)
-          println("I've just met you and I already hate you")
+          println("'I've just met you and I already hate you'")
           input3count = input3count + 1
 
         }
@@ -289,6 +295,7 @@ class Convo_Input_Output {
   var input7 = new String
   var input8 = new String
   var input9 = new String
+
 
   def ConvoPart3(): Unit = {
     input4 = scala.io.StdIn.readLine("You're left alone in the void, what do you do? \n 1 ) Approach the desk and read the ledger. \n 2 ) Stay put and patiently wait your turn \n")
@@ -389,7 +396,7 @@ class Convo_Input_Output {
 
     var inputCount9: Int = 0
 
-    input9 = scala.io.StdIn.readLine("\n1 ) What do you mean? \n2 ) I think understand, where do we go from here? \n3 Stay Silent\n)")
+    input9 = scala.io.StdIn.readLine("\n1 ) What do you mean? \n2 ) I think understand, where do we go from here? \n3 ) Stay Silent\n")
 
     while (inputCount9 < 1) {
       if (input9 == "1") {
@@ -419,13 +426,14 @@ class Convo_Input_Output {
       }
       else {
         println("Please enter 1, 2, or 3")
-        input9 = scala.io.StdIn.readLine("\n1 ) What do you mean? \n2 ) I understand, where do we go from here? \n3 Stay Silent\n)")
+        input9 = scala.io.StdIn.readLine("\n1 ) What do you mean? \n2 ) I understand, where do we go from here? \n3 ) Stay Silent\n")
       }
 
     }
 
 
   }
+
 
   var input10 = new String
   var input11 = new String
@@ -443,152 +451,193 @@ class Convo_Input_Output {
     input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
 
 
-
     var inputCount10: Int = 0
-   1
+    1
     var inputCount11: Int = 0
-
+    1
     while (inputCount10 < 1) {
       if (input10 == "1") {
+        if (inputCount11 == 1) {
+          inputCount11 = inputCount11 - 1
+        }
         input11 = scala.io.StdIn.readLine("Ah the legendary Warrior, one whose legend is build upon the strength of their backs \n forever steadfast they offer" +
           "both protection and defense to those they protect\n Are you sure? \n1) Yes, I'm sure \n2 ) No I need more time to think.\n")
         while (inputCount11 < 1) {
           if (input11 == "1") {
             println("There you have it then. Welcome to Yondel, Warrior")
-          //  jobInput = 1
+            //  jobInput = 1
             SQLNewCharBuild(nameInput, 1)
             inputCount11 = inputCount11 + 1
+            inputCount10 = inputCount10 + 1
 
           }
           else if (input11 == "2") {
-            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
+            ("There you have it then. Welcome to Yondel, Warrior")
+            inputCount11 = inputCount11 + 1
+            println("Inputcount 11" + inputCount11)
           }
           else {
             println("Please choose 1 or 2")
           }
-          inputCount10 = inputCount10 + 1
+
         }
       }
       else if (input10 == "2") {
         input11 = scala.io.StdIn.readLine("Ah, the wondrous Mage. The only limits to your powers will be your imagination. You existence will make sky tremble in anticipation and fear" +
           "\n Are you sure? \n1) Yes, I'm sure \n2 ) No I need more time to think.\n")
+        if (inputCount11 == 1) {
+          inputCount11 = inputCount11 - 1
+        }
         while (inputCount11 < 1) {
           if (input11 == "1") {
             println("There you have it then. Welcome to Yondel, Mage")
             SQLNewCharBuild(nameInput, 2)
-           // jobInput = 2
+            // jobInput = 2
             inputCount11 = inputCount11 + 1
+            inputCount10 = inputCount10 + 1
           }
           else if (input11 == "2") {
-            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
+            println("There you have it then. Welcome to Yondel, Mage")
+            inputCount11 = inputCount11 + 1
+
           }
           else {
             println("Please choose 1 or 2")
           }
-          inputCount10 = inputCount10 + 1
+
         }
 
       }
       else if (input10 == "3") {
         input11 = scala.io.StdIn.readLine("Ah the mischievous Rogue. The only think you need is you blade and somewhere to stick it. Your name will conjure fear in all those who dare speak it" +
           "\n Are you sure? \n1) Yes, I'm sure \n2 ) No I need more time to think.\n")
+        if (inputCount11 == 1) {
+          inputCount11 = inputCount11 - 1
+        }
         while (inputCount11 < 1) {
           if (input11 == "1") {
             println("There you have it then. Welcome to Yondel, Rogue")
-           // jobInput = 4
+            // jobInput = 4
             SQLNewCharBuild(nameInput, 4)
             inputCount11 = inputCount11 + 1
+            inputCount10 = inputCount10 + 1
+
           }
           else if (input11 == "2") {
-            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
+
+            inputCount11 = inputCount11 + 1
           }
           else {
             println("Please choose 1 or 2")
-            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
+            inputCount11 = inputCount11 + 1
           }
-          inputCount10 = inputCount10 + 1
+
         }
       }
       else if (input10 == "4") {
         input11 = scala.io.StdIn.readLine("Ah the wise priest. Friend to those who walk in the light, and sworn enemy to those who don't. You'll bring peace to this world in one way or anothe" +
           "\n Are you sure? \n1) Yes, I'm sure \n2 ) No I need more time to think. \n")
+        if (inputCount11 == 1) {
+          inputCount11 = inputCount11 - 1
+        }
         while (inputCount11 < 1) {
           if (input11 == "1") {
             println("There you have it then. Welcome to Yondel, Priest")
-           // jobInput = 3
+            // jobInput = 3
             SQLNewCharBuild(nameInput, 3)
             inputCount11 = inputCount11 + 1
+            inputCount10 = inputCount10 + 1
+
           }
           else if (input11 == "2") {
-            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
+            //println("There you have it then. Welcome to Yondel, Priest")
+            inputCount11 = inputCount11 + 1
 
           }
           else {
             println("Please choose 1 or 2")
-            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+            input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
+
           }
-          inputCount10 = inputCount10 + 1
+
         }
       }
       else {
         println("Please Choose 1, 2, 3, or 4")
-        input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest")
+        input10 = scala.io.StdIn.readLine("So... who do you want to be? \n1 ) Warrior \n2 ) Mage \n3 ) Rogue \n4 ) Priest\n")
 
       }
     }
-   // SQLNewCharBuild(nameInput,jobInput)
-    //CallCharacterSheet(nameInput, jobInput)
+    // SQLNewCharBuild(nameInput,jobInput)
+
+    CallCharacterSheet(nameInput, charid)
+    println("\n \n \n \n")
+
   }
 
 
+def playerHealth(name:String):Int =
+  {
+    var totalHealth:Int =0
+    val driver = "com.mysql.cj.jdbc.Driver"
+    val url = "jdbc:mysql://localhost:3306/project1_yondel"
+    //println("Connecting to database")
+    val username = "root"
+    val password = "Belynadron1!"
+    var connection: Connection = DriverManager.getConnection(url, username, password)
+    val statement = connection.createStatement()
 
-  def battle(c1:Characters, c2:Characters): String =
-{
-  var result = new String
+    val inputget = statement.executeQuery("SELECT HEALTH FROM CHARACTER_SHEET WHERE NAME = '" +name+ "';")
 
-
-
-  return result;
-}
-
-  def damageCalk(Ability:Int): Int =
+    if(inputget.next())
     {
-      var totalDamage: Int = 0
+      totalHealth = inputget.getInt(1)
+    }
+  return totalHealth
+  }
+  def damageCalkPlayer(name: String, Ability:Int): Int =
+  {
+    //takes a string "name" and the ID for the ability that wants to be used.
+    var totalDamage: Int = 100
+    val driver = "com.mysql.cj.jdbc.Driver"
+    val url = "jdbc:mysql://localhost:3306/project1_yondel"
+    //println("Connecting to database")
+    val username = "root"
+    val password = "Belynadron1!"
+    var colCount: Int = 1
+    var connection: Connection = DriverManager.getConnection(url, username, password)
+    val statement = connection.createStatement()
+    val inputget =statement.executeQuery("Select DAMAGE FROM TOTAL_DAMAGE WHERE NAME= '" +name+"' and ID =" + Ability+";")
+    // println("Select DAMAGE FROM TOTAL_DAMAGE WHERE NAME= '"+name +"' and ID = " + Ability+";")
+    val resultSetMetaData = inputget.getMetaData
 
-
-      val driver = "com.mysql.cj.jdbc.Driver"
-      val url = "jdbc:mysql://localhost:3306/project1_yondel"
-      val username = "root"
-      val password = "Belynadron1!"
-
-      var connection: Connection = DriverManager.getConnection(url, username, password)
-      val statement = connection.createStatement()
-
-      statement.executeQuery("Select ")
-      var base:Int =0
-      var weapon:Int = 0
-      var crit:Int = 0
-
-      //Select job.damage, weapon.damage,
-
-
-      return totalDamage
+    if(inputget.next())
+    {
+      totalDamage = inputget.getInt(1)
     }
 
-
-
-  def addEnemy(createFile: String): Unit =
+    connection.close()
+    return totalDamage
+  }
+  def addEnemy(createFile: String, ID:Int): Unit =
   {
     val driver = "com.mysql.cj.jdbc.Driver"
     val url = "jdbc:mysql://localhost:3306/project1_yondel"
     val username = "root"
-    val password = "//yourpassword"
+    val password = "Belynadron1!"
 
+   // println(createFile+" : File")
     var connection: Connection = DriverManager.getConnection(url, username, password)
     val statement = connection.createStatement()
-    val enemycount = connection.createStatement()
+    //val enemycount = connection.createStatement()
 
     //pulls from a csv file
+
     var maptest = scala.io.Source.fromFile(createFile).mkString
 
 
@@ -597,7 +646,7 @@ class Convo_Input_Output {
 
     //formatting the query
     var inputString = new String
-    inputString = s"INSERT INTO Enemies Values($maptest);"
+    inputString = s"INSERT INTO Enemies Values($ID,$maptest);"
 
     //test print for query format
     // println(inputString)
@@ -605,8 +654,366 @@ class Convo_Input_Output {
     //executing the query
     statement.executeUpdate(inputString)
 
+    connection.close()
+
 
   }
+
+
+  def enemyHealth(name:String, ID:Int): Int =
+  {
+    var totalHealth:Int=0
+
+
+    val driver = "com.mysql.cj.jdbc.Driver"
+    val url = "jdbc:mysql://localhost:3306/project1_yondel"
+    //println("Connecting to database")
+    val username = "root"
+    val password = "Belynadron1!"
+    var connection: Connection = DriverManager.getConnection(url, username, password)
+    val statement = connection.createStatement()
+    val inputget =statement.executeQuery(s"Select HEALTH FROM ENEMIES WHERE NAME = '$name' and Enemy_ID = $ID " )
+
+
+    if(inputget.next())
+    {
+      totalHealth = inputget.getInt(1)
+    }
+
+    connection.close()
+
+
+    return totalHealth
+
+  }
+
+  def enemyDamage(name:String): Int=
+  {
+    var totalDamage: Int = 0
+    // takes the name of an enemy and gets back their damage
+    val driver = "com.mysql.cj.jdbc.Driver"
+    val url = "jdbc:mysql://localhost:3306/project1_yondel"
+   // println("Connecting to database")
+    val username = "root"
+    val password = "Belynadron1!"
+    var connection: Connection = DriverManager.getConnection(url, username, password)
+    val statement = connection.createStatement()
+    val inputget =statement.executeQuery("Select Damage from EDamage WHERE NAME = '"+name+"';" )
+
+
+    if(inputget.next())
+    {
+      totalDamage = inputget.getInt(1)
+    }
+
+    connection.close()
+    return totalDamage
+    //return totalDamage
+
+  }
+
+
+def getAbility(name:String,num:Int):String=
+  {
+    var abilityName = new String
+    val driver = "com.mysql.cj.jdbc.Driver"
+    val url = "jdbc:mysql://localhost:3306/project1_yondel"
+    //println("Connecting to database")
+    var IDs = new String
+    IDs=num.toString
+    val username = "root"
+    val password = "Belynadron1!"
+    var connection: Connection = DriverManager.getConnection(url, username, password)
+    val statement = connection.createStatement()
+    //println(s"SELECT ABILITY FROM TOTAL_DAMAGE WHERE NAME ='$name', and ID = $IDs")
+    val inputget =statement.executeQuery(s"SELECT ABILITY FROM TOTAL_DAMAGE WHERE NAME ='$name' and ID = $IDs" )
+
+
+
+    if(inputget.next())
+    {
+      abilityName = inputget.getString(1)
+    }
+
+    connection.close()
+
+
+    return abilityName
+  }
+  def abilityDesc(name:String): String=
+    {
+      var descOut = new String
+      val driver = "com.mysql.cj.jdbc.Driver"
+      val url = "jdbc:mysql://localhost:3306/project1_yondel"
+      //println("Connecting to database")
+
+      val username = "root"
+      val password = "Belynadron1!"
+      var connection: Connection = DriverManager.getConnection(url, username, password)
+      val statement = connection.createStatement()
+      val inputget =statement.executeQuery(s"SELECT ABILITY_DESCRIPTOR FROM ABILITIES WHERE ABILITY_NAME='$name'" )
+
+      if(inputget.next())
+      {
+        descOut = inputget.getString(1)
+      }
+      connection.close()
+      return descOut
+    }
+
+  def enemyAbility(name:String):String =
+    {
+
+
+      var abilityName = new String
+      val driver = "com.mysql.cj.jdbc.Driver"
+      val url = "jdbc:mysql://localhost:3306/project1_yondel"
+      //println("Connecting to database")
+      val username = "root"
+      val password = "Belynadron1!"
+      var connection: Connection = DriverManager.getConnection(url, username, password)
+      val statement = connection.createStatement()
+      val inputget =statement.executeQuery(s"SELECT abilities.ABILITY_NAME FROM ENEMIES INNER JOIN ABILITIES ON ABILITIES.ABILITY_ID = ENEMIES.ABILITY WHERE ENEMIES.NAME='$name'" )
+
+      if(inputget.next())
+      {
+        abilityName = inputget.getString(1)
+      }
+
+      connection.close()
+
+
+      return abilityName
+
+
+
+    }
+
+
+
+
+  def battle(playerName:String,enemyName:String): Unit=
+  {
+
+
+    var pname = playerName
+    var ename = enemyName
+    var ename1 = "Demon Soldier"
+    var EID = new Random().nextInt(1000)
+
+    addEnemy("src/main/scala/Yondel/"+ename+".csv", EID)
+
+    var ability1name = new String
+    var ability2name = new String
+    var ability3name = new String
+
+    var ability1:Int=0
+    var ability2:Int=0
+    var ability3:Int=0
+
+    var ability1Desc = new String
+    var ability2Desc = new String
+    var ability3Desc = new String
+
+  ability1name = getAbility(pname,1)
+  ability2name = getAbility(pname,2)
+  ability3name = getAbility(pname, 3)
+
+  ability1 = damageCalkPlayer(pname,1)
+  ability2 = damageCalkPlayer(pname,2)
+  ability3 = damageCalkPlayer(pname,3)
+
+  ability1Desc = abilityDesc(ability1name)
+  ability2Desc = abilityDesc(ability2name)
+  ability3Desc = abilityDesc(ability3name)
+
+
+
+  var playerinput=new String
+
+    var ebility = enemyAbility(ename)
+    var edamage = enemyDamage(ename)
+
+
+    var phealth:Int = playerHealth(pname)
+    var ehealth:Int = enemyHealth(ename, EID)
+    var hitchance1 = Random.nextInt(100)
+    println(s"You have been attacked by a $enemyName ")
+
+    println(s"Enemy Health $ehealth")
+    println(s"Player Health $phealth")
+while(phealth > 1 && ehealth > 0)
+  {
+    //println("In the while Loop")
+
+    playerinput = scala.io.StdIn.readLine(s"\nChoose an ability\n 1 ) $ability1name $ability1Desc for $ability1 points of damage \n 2 ) $ability2name $ability2Desc for $ability2 points of damage \n 3 ) $ability3name $ability3Desc for $ability3\n")
+    if(playerinput == "1")
+      {
+        println(s"You used $ability1name")
+        var hitchance1 = Random.nextInt(100)
+        if(hitchance1 > 60)
+          {
+            println(s"You hit the $ename1 with $ability1name")
+            ehealth = ehealth - ability1
+            println(s"The $ename1 has ${ehealth.toString} hp left")
+          }
+        else
+          {
+            println(s"You missed you $ability1name")
+          }
+
+
+
+      }
+    else if(playerinput == "2")
+      {
+        println(s"You hit the $ename1 with $ability2name")
+        ehealth = ehealth - ability2
+        println(s"The $ename1 has ${ehealth.toString} hp left!")
+      }
+    else if(playerinput == "3")
+    {
+      println(s"You hit the $ename1 with $ability3name")
+      phealth = phealth + ability3
+      println(s"You've gained + $ability3 for this fight only!")
+
+    }
+
+    println(s"The $ename1 used $ebility")
+    var hitchance1 = Random.nextInt(100)
+    if(hitchance1 >90)
+      {
+        println(s"The $ename1 hit you with $ebility for $edamage points of damage")
+        phealth = phealth - edamage
+        println(s"You have $phealth hp left")
+      }
+    else
+      println(s"$ename1 missed their $ebility")
+
+
+  }
+
+    var abilityName = new String
+    val driver = "com.mysql.cj.jdbc.Driver"
+    val url = "jdbc:mysql://localhost:3306/project1_yondel"
+    //println("Connecting to database")
+    val username = "root"
+    val password = "Belynadron1!"
+    var connection: Connection = DriverManager.getConnection(url, username, password)
+    val statement = connection.createStatement()
+    val inputget = statement.executeUpdate(s"UPDATE ENEMIES SET STATUS='DEAD' WHERE ENEMY_ID=$EID")
+
+
+  }
+
+  var input14 = new String
+  var input15 = new String
+  var input16 = new String
+  var input17 = new String
+  var input18 = new String
+  var input19 = new String
+  var input20 = new String
+
+def Convo_part5(): Unit =
+{
+
+  val driver = "com.mysql.cj.jdbc.Driver"
+  val url = "jdbc:mysql://localhost:3306/project1_yondel"
+  //println("Connecting to database")
+
+  val username = "root"
+  val password = "Belynadron1!"
+  var connection: Connection = DriverManager.getConnection(url, username, password)
+  val statement = connection.createStatement()
+
+
+  println("A hole opens in the ground below you and you begin to fall. Soon, the white void is nothing but spec, but " +
+    "still you fall further and further into darkness \n" +
+    "Until the last of the fading light blinks out of existence." +
+    "\n'From once there was something so came someone'" +
+    "You slowly open your eyes. Night time already? Had the white void and the door and women... woman? Had all that been a dream?" +
+    "some silly fantasies you made up in your mind for some contrived sense of excitement?\n Your eyes begin to focus in the low light. \n" +
+    "You're in a forest of some kind... maybe it wasn't all a dream. In the distance you can see bobbing lights.")
+  var counter5_1:Int =0
+  input14 = scala.io.StdIn.readLine("1 ) Hide in the forest. \n2 ) Stay were you are \n3 ) Approach the lights\n")
+  while(counter5_1<1) {
+    if(input14 == "1")
+      {
+        println("You stand and sneak into the forest. You feel sluggish, and the thick foliage slows your speed. \nYou move slowly trying, but failing to make noise as you shuffle through the underbrush\n")
+        println("The bouncing lights slowly fade and you let out a hesitant breath.\n You give yourself a moment to gather your thoughts")
+        println("The feeling of a cold wave creeping through your body snaps you from your thoughts. \n" +
+          "You shiver. Something is behind you, you can feel it. Turning you see it. To small lights, shining like miniature suns in the dark forest ")
+        battle(nameInput,"demon_soldier")
+        println(" You feel yourself fading as the demon's sword cuts deep into your body. The world goes dark. " +
+          "\n you have gained 205exp" +
+          "\n You've reached level 2" +
+          "\n You've reached level 3" +
+          "\n You've reached level 4")
+          statement.executeUpdate(s"UPDATE CHARACTERS SET LEVEL = 4 WHERE ET_ID =$charid")
+        println("\n \n \n")
+        CallCharacterSheet(nameInput, charid)
+
+        counter5_1 = counter5_1 + 1
+
+      }
+    else if(input14 == "2")
+      {
+        println("You slump close to the ground. Maybe if you can stay still enough you'll become invisible.")
+        counter5_1 = counter5_1 + 1
+      }
+    else if(input14 == "3")
+      {
+        println("Why? you don't even have a weapon yet.\n Okay you stand to approach the intruders. \n Do you want to try to be stealthy or do you want them to find you?")
+        input15 = scala.io.StdIn.readLine("\n1 ) Stealthy \n2 ) Not Stealthy\n")
+        if(input15=="1")
+          {
+            println("oh wow you're being stealthy. I really didn't expect that.\n")
+
+            counter5_1 = counter5_1 +1
+          }
+        else if(input15 == "2")
+          {
+            println("\nYou want to yell something while you do this don't you?")
+            input16 = scala.io.StdIn.readLine("\n1 ) Yes \n2 ) N0 \n")
+            if(input16 == "1")
+              {
+                input17 = scala.io.StdIn.readLine("\nOf course you do. \n What do you want to say? \n")
+                println(input17 +" you well as you charge into the bushes.")
+                counter5_1 = counter5_1 + 1
+
+              }
+            else if(input16 == "2")
+              {
+                println("Really? ")
+                input18 = scala.io.StdIn.readLine("\n1 ) Okay   \n2 ) Yes you do.")
+                input18 = scala.io.StdIn.readLine("\n Say it. \n")
+                println("Incredible. \n" + input18+ ", you yell as you charge into the bushes." )
+
+                counter5_1 = counter5_1 + 1
+              }
+            else
+              {
+                println("\nChoose 1 or 2")
+                input16 = scala.io.StdIn.readLine("\n1 ) Yes \n2 ) N0 \n")
+              }
+          }
+        else
+          {
+            println("Pick 1 or 2 ")
+            input15 = scala.io.StdIn.readLine("\n1 ) Stealthy \n2 ) Not Stealthy\n")
+          }
+
+
+      }
+    else
+      {
+        println("Please pick 1, 2 or 3\n")
+        input14 = scala.io.StdIn.readLine("1 ) Hide in the forest. 2 ) Stay were you are 3 ) Approach the lights")
+      }
+
+  }
+
+}
 
 
 }
