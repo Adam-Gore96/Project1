@@ -1,0 +1,23 @@
+1,National_Museum_of_African_American_History_and_Culture, H
+2,National_Museum_of_African_Art, A
+3,National_Air_and_Space_Museum, S
+4,National_Air_and_Space_Museum_Steven_Center, S
+5,Smithsonian_American_Art_Museum, A
+6,National_Museum_of_American_History, H
+7,National_Museum_of_The_American_Indian, H
+8,National_Museum_of_The_American_Indian_George_Center, H
+9,Anacostia_Community_Museum, H
+10,Archives_of_American_Art_Lawrence_A. Fleischman Gallery, A
+11,Arts_and_Industries_Building, A
+12,Cooper_Hewitt_Smithsonian_Design_Museum, A
+13,Freer_Gallery_of_Art, A
+14,Hirshhorn_Museum_and_Sculpture_Garden, A
+15,National_Zoo, S
+16,National_Museum_of_Natural_History, S
+17,National_Portrait_Gallery, A
+18,National_Postal_Museum, H
+19,Renwick_Gallery_of_the_Smithsonian_American_Art_Museum, A
+20,S._Dillon_Ripley_Center, A
+21,Arthur_M._Sackler_Gallery, A
+22,Smithsonian_Institution_Building, H
+23,Smithsonian_Gardens, A

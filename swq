@@ -1,0 +1,37 @@
+/**
+    System.setProperty("hadoop.home.dir", "C:\\hadoop")
+    Logger.getLogger("org").setLevel(Level.ERROR)
+    val spark = SparkSession
+      .builder
+      .appName("hello hive")
+      .config("spark.master", "local[*]")
+      .enableHiveSupport()
+      .getOrCreate()
+   // Logger.getLogger("org").setLevel(Level.ERROR)
+    println("created spark session")
+    spark.sparkContext.setLogLevel("ERROR")
+
+    spark.sql("Set hive.exec.dynamic.partition.mode=nonstrict")
+    spark.sql("DROP TABLE IF EXISTS users")
+    spark.sql("create table users(id INT,username String,password String,fname String,lname" +
+      "String) partitioned by (adminlevel String) row format delimited fields terminated by ',' stored as textfile")
+    spark.sql("DROP TABLE IF EXISTS usersB")
+    spark.sql("create table users(id Int, username String, password String, fname String, " +
+      "lname String, adminlevel String)row format delimited fields terminated by ',' stored as textfile")
+    spark.sql("LOAD DATA LOCAL INPATH 'Users.txt' OVERWRITE INTO TABLE usersB")
+    spark.sql("SELECT * FROM usersB").show
+    spark.sql("insert overwrite table users partition(adminlevel) select id,username,password," +
+      "fname,lname,state,adminlevel from usersB")
+    spark.sql("SELECT * FROM users").show
+
+    spark.sql("DROP TABLE IF EXISTS museumsb")
+    spark.sql("CREATE TABLE museumsb(id Int, name String) partitioned by (type String) row format" +
+      " delimited fields terminated by ',' stored as textfile")
+    spark.sql("DROP TABLE IF EXISTS museums")
+    spark.sql("CREATE TABLE museums(id Int, name String, type String)row format delimited fields " +
+      "terminated by ',' stored as textfile")
+    spark.sql("LOAD DATA LOCAL INPATH 'Museums.txt' OVERWRITE INTO TABLE  museums")
+    spark.sql("Select * from museums").show(false)
+    spark.sql("insert overwrite table museumsb partition(type) select id,name,type from museums")
+    spark.sql("Select * from museumsb").show(false)
+**/

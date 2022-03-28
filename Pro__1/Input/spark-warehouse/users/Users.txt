@@ -1,0 +1,9 @@
+1,Agore,pass,Adam,Gore,A
+2,Lrain,wdwawdawd12312,Lauren,Rain,A
+3,Dlee,password,Dean,Lee,A
+4,Ahail,pAssword,Austin,Hail,B
+5,Elite,PaSsWord,Emile,Lite,B
+6,Slors,passWooord,Sunnie,Lors,B
+7,Rkirk,passsswoord,Richard,Kirk,A
+8,Thaddish,no,Tifianny,Haddish,A
+1

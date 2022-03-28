@@ -1,0 +1,8 @@
+1,Agore2,errters123,Adam,Gore,VA,A
+2,Lrain, wdwawdawd12312,Lauren,Rain,VA, A
+3,Dlee,password,Dean,Lee,SC,A
+4,Ahail,pAssword,Austin,Hail,SC,B
+5,Elite,PaSsWord,Emily,Lite,NC,B
+6,Slors,passWooord,Sunnie,Lors,CO,B
+7,Rkirk,passsswoord,Richard,Kirk,CO,A
+8,Thaddish,no,Tifianny,Haddish,CA,A
